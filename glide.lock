@@ -1,0 +1,24 @@
+hash: c06b2ed84fff6269be118fed4d4cfce7c33aac2811888379837b53459cebc1a7
+updated: 2017-02-01T02:25:11.911015189-08:00
+imports:
+- name: github.com/aokoli/goutils
+  version: 9c37978a95bd5c709a15883b6242714ea6709e64
+- name: github.com/ghodss/yaml
+  version: 04f313413ffd65ce25f2541bfd2b2ceec5c0908c
+- name: github.com/inconshreveable/mousetrap
+  version: 76626ae9c91c4f2a10f34cad8ce83ea42c93bb75
+- name: github.com/Masterminds/sprig
+  version: 69011c0cd9b4d2e0733c4d9e2c8e2a5a0d0a2f2f
+- name: github.com/satori/go.uuid
+  version: 879c5887cd475cd7864858769793b2ceb0d44feb
+- name: github.com/spf13/cobra
+  version: 35136c09d8da66b901337c6e86fd8e88a1a255bd
+- name: github.com/spf13/pflag
+  version: 9ff6c6923cfffbcd502984b8e0c80539a94968b7
+- name: gopkg.in/yaml.v2
+  version: 4c78c975fe7c825c6d1466c42be594d1d6f3aba6
+- name: k8s.io/helm
+  version: 5cbc48fb305ca4bf68c26eb8d2a7eb363227e973
+  subpackages:
+  - cmd/helm/strvals
+testImports: []
