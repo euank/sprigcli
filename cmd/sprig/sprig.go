@@ -15,10 +15,13 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var Version = "unknown"
+
 type sprigCommand struct {
 	valueFiles valueFiles
 	envValues  bool
 	dryRun     bool
+	version    bool
 	values     []string
 	target     string
 }
@@ -38,7 +41,8 @@ func NewSprigCmd() *cobra.Command {
 			return sprigCmd.run()
 		},
 	}
-	sprigCLI.Flags().BoolVar(&sprigCmd.envValues, "env", false, "Whether to pull template values from the environment")
+	sprigCLI.Flags().BoolVar(&sprigCmd.envValues, "env", false, "pull template values from the environment")
+	sprigCLI.Flags().BoolVar(&sprigCmd.version, "version", false, "print version and exit")
 	sprigCLI.Flags().VarP(&sprigCmd.valueFiles, "values", "f", "specify values in YAML file (can specify multiple, comma separated)")
 	sprigCLI.Flags().StringArrayVar(&sprigCmd.values, "set", []string{}, "set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)")
 
@@ -101,6 +105,11 @@ func (i *sprigCommand) vals() (map[string]interface{}, error) {
 }
 
 func (i *sprigCommand) run() error {
+	if i.version {
+		fmt.Println("sprig: " + Version)
+		return nil
+	}
+
 	vals, err := i.vals()
 	if err != nil {
 		return err

@@ -1,0 +1,33 @@
+#!/bin/bash
+
+set -e
+set -o pipefail
+set -o nounset
+
+fail() {
+  1>&2 echo $@
+  exit 1
+}
+
+hub version &>/dev/null || {
+  fail "must have hub installed: https://github.com/github/hub"
+}
+
+version=${1:?Must provide the release version (e.g. make release VERSION=0.0.1)}
+
+if ! echo "${version}" | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+  # TODO full semver support (e.g. trailing stuff)
+  fail "version must be of the form 'x.y.z'" 
+fi
+
+mkdir -p ./bin/release
+sudo rkt run --uuid-file-save=/tmp/sprig-build-uuid \
+  docker://golang:1.7 --insecure-options=image,ondisk \
+  --volume src,kind=host,source="$(pwd)" \
+  --mount volume=src,target=/go/src/github.com/euank/sprigcli \
+  --working-dir /go/src/github.com/euank/sprigcli \
+  --exec=go -- build -ldflags "-X \"github.com/euank/sprigcli/cmd/sprig.Version=v${version} ($(git rev-parse --short HEAD))\"" -o bin/release/sprig ./cmd/main.go
+
+sudo rkt rm --uuid-file=/tmp/sprig-build-uuid >/dev/null
+
+hub release -a ./bin/release/sprig -m "Release v${version}" "v${version}"
