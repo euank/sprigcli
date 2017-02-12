@@ -1,4 +1,7 @@
 language: go
+branches:
+  only:
+    - master
 go_import_path: github.com/euank/sprigcli
 go:
   - 1.x
