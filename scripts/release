@@ -30,4 +30,4 @@ sudo rkt run --uuid-file-save=/tmp/sprig-build-uuid \
 
 sudo rkt rm --uuid-file=/tmp/sprig-build-uuid >/dev/null
 
-hub release -a ./bin/release/sprig -m "Release v${version}" "v${version}"
+hub release create -a "./bin/release/sprig#sprig-amd64-linux" -m "Release v${version}" "v${version}"
