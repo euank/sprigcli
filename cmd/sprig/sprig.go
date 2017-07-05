@@ -94,9 +94,10 @@ func (i *sprigCommand) vals() (map[string]interface{}, error) {
 	// Environment set stuff
 	if i.envValues {
 		envMap := map[string]interface{}{}
-		envKeys := os.Environ()
-		for _, key := range envKeys {
-			envMap[key] = os.Getenv(key)
+		envVars := os.Environ()
+		for _, envVar := range envVars {
+			splitVar := strings.SplitN(envVar, "=", 2)
+			envMap[splitVar[0]] = splitVar[1]
 		}
 		base = mergeValues(base, envMap)
 	}

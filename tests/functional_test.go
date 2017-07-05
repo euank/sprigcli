@@ -25,3 +25,16 @@ key: value
 	assert.Nil(t, err)
 	assert.Equal(t, string(out), "foo is bar and keyx2 is valuevalue")
 }
+
+func TestEnvUsage(t *testing.T) {
+	inputFile := "The value of environment variable foo was {{ .foo }}"
+	f, err := ioutil.TempFile("", "sprig_testin")
+	f.WriteString(inputFile)
+	env := []string{"foo=read from the environment"}
+
+	cmd := exec.Command("../bin/sprig", "--env", f.Name())
+	cmd.Env = env
+	out, err := cmd.CombinedOutput()
+	assert.Nil(t, err)
+	assert.Equal(t, string(out), "The value of environment variable foo was read from the environment")
+}
