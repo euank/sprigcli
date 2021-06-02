@@ -9,9 +9,9 @@ import (
 	"text/template"
 
 	yaml "gopkg.in/yaml.v2"
-	"k8s.io/helm/cmd/helm/strvals"
+	"helm.sh/helm/v3/pkg/strvals"
 
-	"github.com/Masterminds/sprig"
+	"github.com/Masterminds/sprig/v3"
 	"github.com/spf13/cobra"
 )
 

@@ -1,0 +1,32 @@
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - id: sprigcli
+    main: cmd/main.go
+    binary: sprigcli
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    goarm: [7]
+archives:
+  - id: sprigcli-archive
+    name_template: |-
+      sprigcli_{{ .Tag }}_{{ .Os }}_{{ .Arch -}}
+    builds:
+      - sprigcli
+    format_overrides:
+      - goos: windows
+        format: zip
+    files: [""]
+checksum:
+  name_template: "checksums.txt"
+  algorithm: sha256
